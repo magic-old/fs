@@ -12,7 +12,6 @@ branches:
 
 env:
   matrix:
-    - NODE_OPTIONS="--experimental-modules"
     - NODE_VERSION="10"
 
 matrix:
@@ -24,13 +23,8 @@ addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
 
 before_install:
-  - export CXX=g++
-  - export CC=gcc
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=g++-4.8; fi
   - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
   - nvm install $NODE_VERSION

@@ -39,6 +39,7 @@ install:
   - npm -v
   # Build
   - npm install --build-from-source --msvs_version=2015
+  - NODE_OPTIONS="--experimental-modules"
   - npm test
   - ps: >-
       if ($env:APPVEYOR_REPO_COMMIT_MESSAGE.ToLower().Contains("[publish binary]")) {

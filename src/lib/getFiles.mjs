@@ -1,18 +1,27 @@
 import path from 'path'
 
-import fs from '../index'
+import fs from '..'
 
 export const getFiles =
-  async (dir, recursive = false) => {
-    const entries = await fs.readdir(dir)
-    return await Promise.all(entries.map(async file => {
+  async (dir = process.cwd(), recursive = false) => {
+    if (await fs.isFile(dir)) {
+      return [dir]
+    }
+
+    const files = await fs.readdir(dir)
+    let collected = []
+    await Promise.all(files.map(async file => {
       const filePath = path.join(dir, file)
+
       if (recursive && await fs.isDir(filePath)) {
-        return await getFiles(filePath, recursive)
+        const dirs = await getFiles(filePath, recursive)
+        dirs.forEach(dir => collected.push(dir))
       } else if (await fs.isFile(filePath)) {
-        return filePath
+        collected.push(filePath)
       }
-    })).then(entries => entries.filter(a => a))
+    }))
+
+    return collected
   }
 
 export default getFiles

@@ -3,7 +3,7 @@ import path from 'path'
 import fs from '..'
 
 export const getDirs =
-  async (dir, recursive = false) => {
+  async (dir = process.cwd(), recursive = false) => {
     if (await fs.isFile(dir)) {
       return []
     }

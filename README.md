@@ -29,17 +29,36 @@ const test = async () => {
 
 #### Additional Helper Functions:
 
-##### isFile
-test if a pathname is a file (stats.isFile)
-```javascript
-  const isAFile = await fs.isFile('/test/path')
-```
-
 ##### isDir
 test if a pathname is a dir (stats.isDir)
 ```javascript
   const isADir = await fs.isDir('/test/path')
+  // true || false
 ```
+
+##### getDirs
+returns an array with absolute paths to all directories.
+```javascript
+  const recursive = true || false
+  const dirs = await fs.getDirs('/test/path', recursive)
+  // ['/test/path/dir1', /test/path/dir2, '/test/path/dir1/subdir/if/recursive']
+```
+
+##### isFile
+test if a pathname is a file (stats.isFile)
+```javascript
+  const isAFile = await fs.isFile('/test/path')
+  // true || false
+```
+
+##### getFiles
+returns an array with absolute paths to all files.
+```javascript
+  const recursive = true || false
+  const dirs = await fs.getDirs('/test/path', recursive)
+  // ['/test/path/dir1', /test/path/dir2, '/test/path/dir1/subfiles.if.recursive']
+```
+
 
 [travis-image]: https://img.shields.io/travis/jaeh/node-zopfli-es/master.svg?label=Linux%20build
 [travis-url]: https://travis-ci.org/jaeh/node-zopfli-es

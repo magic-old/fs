@@ -1,8 +1,20 @@
-import {is} from '@magic/test'
 import nfs from 'fs'
 import util from 'util'
 
+import * as lib from './lib'
+
+export {
+  isDir,
+  getDirs,
+  isFile,
+  getFiles,
+} from './lib'
+
 export const fs = nfs
+
+Object.keys(lib).forEach(key => {
+  fs[key] = lib[key]
+})
 
 export const promising = [
   'access',

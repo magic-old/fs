@@ -1,3 +1,4 @@
+import { is, tryCatch } from '@magic/test'
 import path from 'path'
 import fs from '../../src'
 
@@ -7,8 +8,7 @@ const subfile111 = path.join(fixtures, 'subdir_1', 'subdir_1_1', 'subfile_1_1_1'
 const subdir1 = path.join(fixtures, 'subdir_1')
 
 export default [
-  { fn: async () => await fs.isFile(subfile1), expect: true },
-  { fn: async () => await fs.isFile(subfile111), expect: true },
-  { fn: async () => await fs.isFile(subdir1), expect: false },
-  { fn: async () => await fs.isFile(fixtures), expect: false },
+  { fn: tryCatch(fs.getFiles, fixtures), expect: is.len.equal(1) },
+  { fn: tryCatch(fs.getFiles, fixtures), expect: is.deep.eq([subfile1]), info: 'returns correct' },
+  { fn: tryCatch(fs.getFiles, fixtures, true), expect: is.len.equal(2), info: 'recursive works' },
 ]

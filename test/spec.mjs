@@ -2,9 +2,14 @@ import { is } from '@magic/test'
 
 import nfs from 'fs'
 
-import fs from '../src'
+import { fs, promising } from '../src'
+
+const isSync = k => k.endsWith('Sync')
+const isStream = k => k.endsWith('Stream')
+
+const isPromisified = fn => fn.toString().includes('createPromise') || is.promise(fn)
 
 export default [
   { fn: Object.keys(nfs), expect: is.deep.eq(Object.keys(fs)), info: 'keys equal node.fs' },
-  { fn: Object.values(nfs), expect: t => !is.fn(t) || is.fn(t.then), info: 'funcs are promises' },
+  { fn: promising.every(p => isPromisified(fs[p])), expect: true, info: 'fns are promisified' },
 ]
